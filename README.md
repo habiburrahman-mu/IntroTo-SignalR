@@ -1,4 +1,5 @@
 # IntroTo-SignalR
+
 Welcome to the IntroTo-SignalR repository! This project provides a comprehensive introduction to using SignalR, a library for ASP.NET Core that facilitates real-time web functionality. SignalR is perfect for applications requiring instant updates from the server, such as chat apps, live dashboards, and collaborative tools.
 
 ## Hub and Clients
