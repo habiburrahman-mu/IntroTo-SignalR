@@ -1,1 +1,13 @@
-<p class="">Hello From {{title}} app.
+Hello From {{title}} app.
+
+<ng-container *ngIf="list$ | async as list">
+  <p *ngIf="list.loading">
+    Data is loading
+  </p>
+  <p *ngIf="list.data">
+    {{list.data | json}}
+  </p>
+  <p *ngIf="list.error">
+    An error ocurred.
+  </p>
+</ng-container>
