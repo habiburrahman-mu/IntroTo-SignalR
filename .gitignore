@@ -442,3 +442,5 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+.angular/cache
+angular/.angular/cache/18.0.3/
