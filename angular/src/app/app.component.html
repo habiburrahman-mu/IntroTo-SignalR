@@ -1,12 +1,35 @@
-Hello From {{title}} app.
+
+<h1 class="text-center mb-4">Real time bidding</h1>
 
 <ng-container *ngIf="list$ | async as list">
   <p *ngIf="list.loading">
     Data is loading
   </p>
-  <p *ngIf="list.data">
-    {{list.data | json}}
-  </p>
+  <ng-container *ngIf="list.data">
+    <!-- {{list.data | json}} -->
+    <div class="card py-4 px-4" style="max-width: 80%; margin: 0 auto">
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Item Name</th>
+            <th scope="col">Current Bid</th>
+            <th scope="col">Bid</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let auction of list.data">
+            <th scope="row">{{auction.id}}</th>
+            <td>{{auction.itemName}}</td>
+            <td>{{auction.currentBid}}</td>
+            <td>
+              <button type="button" class="btn btn-primary">Bid</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-container>
   <p *ngIf="list.error">
     An error ocurred.
   </p>
