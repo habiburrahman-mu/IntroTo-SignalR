@@ -21,14 +21,14 @@
           <tr>
             <th scope="row">{{auction.id}}</th>
             <td>{{auction.itemName}}</td>
-            <td>{{auction.currentBid}}</td>
+            <td class="text-success fw-bold">{{auction.currentBid}}</td>
             <td>
-              <div class="d-flex">
+              <div class="d-flex gap-2">
                 <div style="width: 100px;" class="mr-1">
                   <input type="number" class="form-control" [(ngModel)]="auction.newBid" [required]="true"
                     [min]="auction.currentBid + 1" />
                 </div>
-                <div class="ml-1">
+                <div>
                   <button type="button" class="btn btn-primary" (click)="onClickBid(auction)"
                     [disabled]="auction.newBid <= auction.currentBid">Bid</button>
                 </div>
