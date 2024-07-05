@@ -5,9 +5,9 @@ namespace API.Hubs
 {
     public class AuctionHub : Hub
     {
-        public async Task NotifyNewBid(ActionNotify actionNotify)
+        public async Task NotifyNewBid(AuctionNotify auctionNotify)
         {
-            await Clients.All.SendAsync("ReceiveNewBid", actionNotify);
+            await Clients.All.SendAsync("ReceiveNewBid", auctionNotify);
         }
     }
 }
