@@ -25,9 +25,8 @@ export class AppComponent implements OnInit {
         error: false
       })),
     startWith({ loading: true, data: undefined, error: false }),
-    catchError(err => of({ loading: false, data: undefined, error: true }))
+    catchError(err => of({ loading: false, data: undefined, error: true })),
   );
-
 
   ngOnInit(): void {
   }
