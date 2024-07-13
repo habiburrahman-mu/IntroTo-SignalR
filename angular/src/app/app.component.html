@@ -30,7 +30,9 @@
                 </div>
                 <div>
                   <button type="button" class="btn btn-primary" (click)="onClickBid(auction)"
-                    [disabled]="auction.newBid <= auction.currentBid">Bid</button>
+                    [disabled]="auction.newBid <= auction.currentBid || isLoading()">
+                    Bid <i style="min-width: 18px;" class="fa-solid" [ngClass]="auction.id === bidId() && isLoading() ? 'fa-spinner fa-spin' : 'fa-check'"></i>
+                  </button>
                 </div>
               </div>
             </td>
