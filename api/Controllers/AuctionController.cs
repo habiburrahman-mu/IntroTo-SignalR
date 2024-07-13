@@ -23,9 +23,9 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public IActionResult Get(int auctionId, int newBid)
+        public IActionResult PlaceBid([FromBody] NewBidRequest newBidRequest)
         {
-            auctionRepository.NewBid(auctionId, newBid);
+            auctionRepository.NewBid(newBidRequest.AuctionId, newBidRequest.NewBid);
             return Ok();
         }
     }
