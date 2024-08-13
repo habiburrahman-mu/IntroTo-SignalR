@@ -6,6 +6,7 @@ import Auction from './models/Auction';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AuctionHubService } from './services/auction-hub.service';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 })
 export class AppComponent implements OnInit {
   private httpService = inject(HttpService);
+  private auctionHubService = inject(AuctionHubService);
   private destroyRef = inject(DestroyRef);
 
   title = 'SignalR';
@@ -33,6 +35,10 @@ export class AppComponent implements OnInit {
   );
 
   ngOnInit(): void {
+    this.auctionHubService.startConnection();
+    this.auctionHubService.onReceivedNewBid(action => {
+      console.log(action);
+    });
   }
 
   onClickBid(data: AuctionExtended) {
@@ -42,6 +48,7 @@ export class AppComponent implements OnInit {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
         next: _ => {
+          this.auctionHubService.notifyNewBid({ id: data.id, currentBid: data.newBid })
           this.isLoading.set(false);
         },
         error: err => {

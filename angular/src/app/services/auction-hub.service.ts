@@ -13,7 +13,7 @@ export class AuctionHubService {
 
   public startConnection() {
     this.hubConnection = new SignalR.HubConnectionBuilder()
-      .withUrl(APIConstants.BaseAddress + APIConstants.AuctionHubAddress)
+      .withUrl(APIConstants.BaseAddress + APIConstants.AuctionHubAddress, { withCredentials: false })
       .build();
 
     this.hubConnection.start()
@@ -25,5 +25,11 @@ export class AuctionHubService {
     this.hubConnection?.on(HubMessageConstants.ReceiveNewBid, (auctionNotify: AuctionNotify) => {
       callBack(auctionNotify);
     });
+  }
+
+  public notifyNewBid(auctionNotify: AuctionNotify) {
+    this.hubConnection?.send("NotifyNewBid", auctionNotify)
+      .then(_ => console.log("Notified Successfully."))
+      .catch(err => console.log(err));
   }
 }

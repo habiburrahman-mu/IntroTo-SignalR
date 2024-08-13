@@ -34,6 +34,6 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.MapHub<AuctionHub>("/actionhub");
+app.MapHub<AuctionHub>("/actionhub").RequireCors();
 
 app.Run();
