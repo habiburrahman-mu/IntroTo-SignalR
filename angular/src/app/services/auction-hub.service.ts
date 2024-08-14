@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import * as SignalR from '@microsoft/signalr';
 import APIConstants from '../constants/api-constants';
 import AuctionNotify from '../models/AuctionNotify';
-import HubMessageConstants from '../constants/hub-message-constants';
+import { HubMessageConstants } from '../constants/hub-message-constants';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +22,13 @@ export class AuctionHubService {
   }
 
   public onReceivedNewBid(callBack: (auctionNotify: AuctionNotify) => void) {
-    this.hubConnection?.on(HubMessageConstants.ReceiveNewBid, (auctionNotify: AuctionNotify) => {
+    this.hubConnection?.on(HubMessageConstants.CallBackMethod.ReceivedNewBid, (auctionNotify: AuctionNotify) => {
       callBack(auctionNotify);
     });
   }
 
   public notifyNewBid(auctionNotify: AuctionNotify) {
-    this.hubConnection?.send("NotifyNewBid", auctionNotify)
+    this.hubConnection?.send(HubMessageConstants.HubMethod.NotifyNewBid, auctionNotify)
       .then(_ => console.log("Notified Successfully."))
       .catch(err => console.log(err));
   }
