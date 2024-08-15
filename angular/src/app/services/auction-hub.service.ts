@@ -13,8 +13,12 @@ export class AuctionHubService {
 
   public startConnection() {
     this.hubConnection = new SignalR.HubConnectionBuilder()
-      .withUrl(APIConstants.BaseAddress + APIConstants.AuctionHubAddress, { withCredentials: false })
-      .build();
+      .withUrl(APIConstants.BaseAddress + APIConstants.AuctionHubAddress,
+        {
+          withCredentials: false,
+          transport: SignalR.HttpTransportType.WebSockets,
+          skipNegotiation: true,
+        }).build();
 
     this.hubConnection.start()
       .then(_ => console.log("connected to auction hub"))
