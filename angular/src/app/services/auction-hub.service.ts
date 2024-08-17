@@ -16,8 +16,6 @@ export class AuctionHubService {
       .withUrl(APIConstants.BaseAddress + APIConstants.AuctionHubAddress,
         {
           withCredentials: false,
-          transport: SignalR.HttpTransportType.WebSockets,
-          skipNegotiation: true,
         }).build();
 
     this.hubConnection.start()
