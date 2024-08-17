@@ -3,6 +3,7 @@ import * as SignalR from '@microsoft/signalr';
 import APIConstants from '../constants/api-constants';
 import AuctionNotify from '../models/AuctionNotify';
 import { HubMessageConstants } from '../constants/hub-message-constants';
+import Auction from '../models/Auction';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,18 @@ export class AuctionHubService {
   public notifyNewBid(auctionNotify: AuctionNotify) {
     this.hubConnection?.send(HubMessageConstants.HubMethod.NotifyNewBid, auctionNotify)
       .then(_ => console.log("Notified Successfully."))
+      .catch(err => console.log(err));
+  }
+
+  public onReceivedNewItem(callBack: (auction: Auction) => void) {
+    this.hubConnection?.on(HubMessageConstants.CallBackMethod.ReceivedNewItem, (auction: Auction) => {
+      callBack(auction);
+    });
+  }
+
+  public notifyNewItem(auction: Auction) {
+    this.hubConnection?.send(HubMessageConstants.HubMethod.NotifyNewItem, auction)
+      .then(_ => console.log("Notified New Item Successfully."))
       .catch(err => console.log(err));
   }
 }

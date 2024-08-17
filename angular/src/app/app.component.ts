@@ -22,8 +22,11 @@ export class AppComponent implements OnInit {
   private destroyRef = inject(DestroyRef);
 
   title = 'SignalR';
+  newItemName: string | null = null;
+  newItemStartingBid: number | null = null;
   bidId = signal(0);
   isLoading = signal(false);
+  isNewItemSaveLoading = signal(false);
   private listSubject = new BehaviorSubject<{ loading: boolean; data?: AuctionExtended[]; error: boolean }>({ loading: true, data: undefined, error: false });
   list$ = this.listSubject.asObservable();
 
@@ -77,6 +80,10 @@ export class AppComponent implements OnInit {
         data: list
       });
     }
+  }
+
+  onClickAddNewItem() {
+
   }
 }
 

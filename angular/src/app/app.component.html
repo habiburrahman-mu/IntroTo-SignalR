@@ -5,7 +5,18 @@
     Data is loading
   </p>
   <ng-container *ngIf="list.data">
-    <!-- {{list.data | json}} -->
+    <div class="d-flex gap-2 justify-content-center mb-2">
+      <div><input type="text" class="form-control" [(ngModel)]="newItemName" [required]="true" [minlength]="2" /></div>
+      <div><input type="number" class="form-control" [(ngModel)]="newItemStartingBid" [required]="true" [min]="1" />
+      </div>
+      <div>
+        <button type="button" class="btn btn-primary" (click)="onClickAddNewItem()"
+          [disabled]="!newItemName && !newItemStartingBid">
+          Add <i style="min-width: 18px;" class="fa-solid"
+            [ngClass]="isNewItemSaveLoading() ? 'fa-spinner fa-spin' : 'fa-check'"></i>
+        </button>
+      </div>
+    </div>
     <div class="card py-4 px-4" style="max-width: 80%; margin: 0 auto">
       <table class="table">
         <thead>
@@ -31,7 +42,8 @@
                 <div>
                   <button type="button" class="btn btn-primary" (click)="onClickBid(auction)"
                     [disabled]="auction.newBid <= auction.currentBid || isLoading()">
-                    Bid <i style="min-width: 18px;" class="fa-solid" [ngClass]="auction.id === bidId() && isLoading() ? 'fa-spinner fa-spin' : 'fa-check'"></i>
+                    Bid <i style="min-width: 18px;" class="fa-solid"
+                      [ngClass]="auction.id === bidId() && isLoading() ? 'fa-spinner fa-spin' : 'fa-check'"></i>
                   </button>
                 </div>
               </div>

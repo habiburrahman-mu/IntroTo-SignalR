@@ -11,5 +11,11 @@ namespace API.Hubs
         {
             await Clients.All.SendAsync(SignalRConstants.CallBackMethod.ReceivedNewBid, auctionNotify);
         }
+
+        [HubMethodName(SignalRConstants.HubMethod.NotifyNewItem)]
+        public async Task NotifyNewItem(Auction auction)
+        {
+            await Clients.All.SendAsync(SignalRConstants.CallBackMethod.ReceivedNewItem, auction);
+        }
     }
 }

@@ -20,23 +20,24 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            var list = auctionRepository.GetAll();
+            var list = await auctionRepository.GetAll();
             return Ok(list);
         }
 
         [HttpPost]
         public async Task<IActionResult> PlaceBid([FromBody] NewBidRequest newBidRequest)
         {
-            auctionRepository.NewBid(newBidRequest.AuctionId, newBidRequest.NewBid);
-            var auctionNotify = new AuctionNotify
-            {
-                Id = newBidRequest.AuctionId,
-                CurrentBid = newBidRequest.NewBid,
-            };
-            //await hubContext.Clients.All.SendAsync("ReceiveNewBid", auctionNotify);
+            await auctionRepository.NewBid(newBidRequest.AuctionId, newBidRequest.NewBid);
             return Ok();
+        }
+
+        [HttpPost("AddNewItem")]
+        public async Task<ActionResult<int>> AddNewItem([FromBody] Auction auction)
+        {
+            var id = await auctionRepository.AddNewItem(auction);
+            return Ok(id);
         }
     }
 }
