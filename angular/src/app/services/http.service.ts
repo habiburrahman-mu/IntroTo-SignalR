@@ -20,4 +20,15 @@ export class HttpService {
   placeBid(auctionId: number, newBid: number): Observable<void> {
     return this.httpClient.post<void>(this.apiAddress, { auctionId, newBid });
   }
+
+  addNewItem(itemName: string, startingBid: number): Observable<number> {
+    const actionPath = APIConstants.AddNewItemPath;
+    const requestBody: Auction = {
+      id: 0,
+      itemName,
+      currentBid: startingBid
+    };
+
+    return this.httpClient.post<number>(this.apiAddress + actionPath, requestBody);
+  }
 }

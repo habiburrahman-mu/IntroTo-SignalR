@@ -33,10 +33,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.loadData();
     this.auctionHubService.startConnection();
-    this.auctionHubService.onReceivedNewBid(auction => {
-      this.updateNewBid(auction);
-      console.log(auction);
-    });
+    this.auctionHubService.onReceivedNewBid(this.updateNewBid.bind(this));
+    this.auctionHubService.onReceivedNewItem(this.addNewItemToLocalList.bind(this));
   }
 
   private loadData() {
@@ -83,7 +81,39 @@ export class AppComponent implements OnInit {
   }
 
   onClickAddNewItem() {
+    if (this.newItemName && this.newItemName.length > 2 && this.newItemStartingBid && this.newItemStartingBid > 0) {
+      this.isNewItemSaveLoading.set(true);
+      this.httpService.addNewItem(this.newItemName, this.newItemStartingBid)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: id => {
+            this.auctionHubService.notifyNewItem({ id, itemName: this.newItemName!, currentBid: this.newItemStartingBid! });
+            this.newItemName = null;
+            this.newItemStartingBid = null;
+            this.isNewItemSaveLoading.set(false);
+          },
+          error: err => {
+            console.log(err);
+            this.isNewItemSaveLoading.set(false);
+          }
+        });
+    }
+  }
 
+  addNewItemToLocalList(newItem: Auction) {
+    const currentState = this.listSubject.value;
+    var list = this.listSubject.value.data;
+    if (list) {
+      list.push({ ...newItem, newBid: newItem.currentBid + 1 });
+    } else {
+      list = [];
+      list.push({ ...newItem, newBid: newItem.currentBid + 1 });
+    }
+
+    this.listSubject.next({
+      ...currentState,
+      data: list
+    });
   }
 }
 

@@ -6,14 +6,14 @@
   </p>
   <ng-container *ngIf="list.data">
     <div class="d-flex gap-2 justify-content-center mb-2">
-      <div><input type="text" class="form-control" [(ngModel)]="newItemName" [required]="true" [minlength]="2" /></div>
-      <div><input type="number" class="form-control" [(ngModel)]="newItemStartingBid" [required]="true" [min]="1" />
+      <div><input type="text" class="form-control" [(ngModel)]="newItemName" [required]="true" [minlength]="2" placeholder="Item Name"/></div>
+      <div><input type="number" class="form-control" [(ngModel)]="newItemStartingBid" [required]="true" [min]="1" placeholder="Starting Bid"/>
       </div>
       <div>
         <button type="button" class="btn btn-primary" (click)="onClickAddNewItem()"
           [disabled]="!newItemName && !newItemStartingBid">
           Add <i style="min-width: 18px;" class="fa-solid"
-            [ngClass]="isNewItemSaveLoading() ? 'fa-spinner fa-spin' : 'fa-check'"></i>
+            [ngClass]="isNewItemSaveLoading() ? 'fa-spinner fa-spin' : 'fa-plus'"></i>
         </button>
       </div>
     </div>
