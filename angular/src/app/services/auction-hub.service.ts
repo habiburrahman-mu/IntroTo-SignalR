@@ -17,7 +17,9 @@ export class AuctionHubService {
       .withUrl(APIConstants.BaseAddress + APIConstants.AuctionHubAddress,
         {
           withCredentials: false,
-        }).build();
+        })
+        .withAutomaticReconnect()
+        .build();
 
     this.hubConnection.start()
       .then(_ => console.log("connected to auction hub"))
